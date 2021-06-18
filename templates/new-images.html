@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Updated Images</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/download.js') }}">
+</head>
+<body>
+<h1>Updated Images</h1>
+   <h3>Select the download button below to retrieve</h3>
+       <form method=get enctype=multipart/form-data>
+           <output name="updated"></output>
+           <button type="submit" value="Download">Download Images</button>
+       </form>
+</body>
+</html>

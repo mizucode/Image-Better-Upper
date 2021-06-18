@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Image better-upper</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/upload.js') }}">
 </head>
 <body>
    <h1>Image better-upper</h1>
@@ -10,94 +12,7 @@
        <form method=post enctype=multipart/form-data>
            <input name="file" type=file id="file" onchange="list_files()"/>
            <p id="upload_text">Drag your files here or click in this area.</p>
-           <button type="submit" value="Upload">Upload</button>
+           <button type="submit" value="Upload">Update</button>
        </form>
-<script>
-function list_files(){
-    let x = document.getElementById("file");
-    let txt = "";
-    if ('files' in x) {
-    if (x.files.length === 0) {
-      txt = "Select one or more files.";
-    } else {
-      for (let i = 0; i < x.files.length; i++) {
-          let file = x.files[i];
-          if ('name' in file) {
-          txt += "file selected: " + file.name + "<br>";
-        }
-      }
-    }
-  }
-  else {
-    if (x.value === "") {
-      txt += "Select one or more files.";
-    } else {
-      txt += "The files property is not supported by your browser!";
-      txt  += "<br>The path of the selected file: " + x.value; // If the browser does not support the files property, it will return the path of the selected file instead.
-    }
-  }
-  document.getElementById("upload_text").innerHTML = txt;
-}
-</script>
-<style>
-body{
-  background: white;
-}
-
-h1, h3{
- width: 100%;
- height: 100%;
-    line-height: 150%;
-text-align: center;
- color: #16a085;
- font-family: Spartan,monospace;
-}
-form{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -100px;
-  margin-left: -250px;
-  width: 500px;
-  height: 200px;
-  border: 4px dashed mintcream;
-}
-form p{
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  line-height: 170px;
-  color: #16a085;
-  font-family: Spartan,monospace;
-}
-form input{
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-form button{
-    color: #ffffff;
-  background: #16a085;
-  border: none;
-  width: 508px;
-  height: 35px;
-    margin: -20px 0 0 -4px;
-    border-radius: 4px;
-  border-bottom: 4px solid #117A60;
-  transition: all .2s ease;
-  outline: none;
-    font-family: Spartan, monospace;
-}
-form button:hover{
-  background: #149174;
-	color: #0C5645;
-}
-form button:active{
-  border:0;
-}
-</style>
 </body>
 </html>

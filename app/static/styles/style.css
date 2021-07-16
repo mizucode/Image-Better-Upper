@@ -1,7 +1,6 @@
 body{
   background: white;
 }
-
 h1, h3{
  width: 100%;
  height: 100%;
@@ -10,33 +9,7 @@ text-align: center;
  color: #16a085;
  font-family: Spartan,monospace;
 }
-form{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -100px;
-  margin-left: -250px;
-  width: 500px;
-  height: 200px;
-  border: 4px dashed mintcream;
-}
-form p{
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  line-height: 170px;
-  color: #16a085;
-  font-family: Spartan,monospace;
-}
-form input{
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-form button{
+button{
     color: #ffffff;
   background: #16a085;
   border: none;
@@ -49,10 +22,55 @@ form button{
   outline: none;
     font-family: Spartan, monospace;
 }
-form button:hover{
-  background: #149174;
-	color: #0C5645;
+form{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -250px;
+  width: 500px;
+  height: 200px;
+  border: 4px dashed mintcream;
 }
-form button:active{
-  border:0;
+
+form ol {
+  padding-left: 0;
+}
+
+form li, div > p {
+  background: #eee;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  list-style-type: none;
+  color: #16a085;
+}
+
+form img {
+    height: 64px;
+    order: 1;
+}
+
+form p {
+    line-height: 32px;
+    padding-left: 10px;
+}
+
+form label, form button {
+    background-color: #16a085;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px ridge black;
+    font-size: 0.8rem;
+    height: auto;
+}
+
+form label:hover, form button:hover {
+   background-color: #149174;
+   color: #0C5645;
+}
+
+form label:active, form button:active {
+  background-color: #149174;
+  color: #0C5645;
 }

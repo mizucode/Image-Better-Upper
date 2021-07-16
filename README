@@ -4,19 +4,19 @@ Install Heroku CLI
 
 set up virtual environment:
 
-cd into folder where image-better-upper is located
+cd into folder where app is located (ex. downloads, pycharmprojects)
 
-% source image-better-upper/bin/activate
+% virtualenv app-name
+
+% source app-name/bin/activate
 
 *Make sure your requirements.txt folder matches your venv installs
 
-% cd image-better-upper
+% cd app-name
 
 % pip3 install flask gunicorn
 
-% mkdir app
 
-% cd app
 
  add wsgi.py file
 
@@ -26,16 +26,20 @@ cd into folder where image-better-upper is located
     if __name__ == "__main__":
         app.run()
 
+
 % python wsgi.py
 
 if missing modules errors, install them via pip or relevant installer
 ex. missing module imageio
 in cli, % pip3 install imageio
+
+if import error, try re-installing package associated with it (in my case it was numpy) in pycharm or ide you are using
+
 run % python wsgi.py another time
 
 go to running url specified
 
-if any errors, check back to terminal, mine were fairly obviously stated,
+if any other errors, check back to terminal, mine were fairly obviously stated,
  such as could not find in 'app/static', did you mean 'static' instead?
 (run python wsgi.py until no errors)
 

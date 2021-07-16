@@ -52,7 +52,6 @@
         'image/svg+xml',
         'image/tiff',
         'image/webp',
-        `image/x-icon`
     ];
 
     function validFileType(file) {

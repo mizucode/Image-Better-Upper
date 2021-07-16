@@ -88,12 +88,13 @@ def download_file(filename):
 # final page displays goodbye message along with prompt to do more images, while files are downloading
 @app.route('/download')
 def download():
+    file = request.args.get('file', None)
     if "update more images" in request.form:
         # Clear current Flask session and redirects to home page.
         session.pop('UPLOAD_FOLDER', None)
         session.pop('DOWNLOAD_FOLDER', None)
         return redirect(url_for('/'))
-    return render_template("download.html")
+    return render_template("download.html", file=file)
 
 
 #app.add_url_rule(

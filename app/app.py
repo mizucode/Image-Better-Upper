@@ -5,6 +5,10 @@ from numpy import asarray
 from PIL import Image
 import os
 from pathlib import Path
+import asyncio
+import cv2
+from cv2 import dnn_superres
+import numpy
 
 UPLOAD_FOLDER = Path(__file__).resolve().parent / 'uploads'
 
@@ -55,15 +59,19 @@ def upload():
             file.save(app.config['UPLOAD_FOLDER'] / filename)
             convert_image(app.config['UPLOAD_FOLDER'], filename)
             return redirect(url_for('download_file', filename=filename))
-        return redirect(url_for('download'))
     return render_template('upload.html')
 
 
 # convert image function
 def convert_image(path, filename):
     print(path / filename)
-    im = imageio.imread(open(path / filename, 'rb'))
-    array = asarray(im)
+    img = imageio.imread(open(path / filename, 'rb'))
+    sr = dnn_superres.DnnSuperResImpl_create()
+    cv_path = "ESPCN_x3.pb"
+    sr.readModel(cv_path)
+    sr.setModel("espcn", 3)
+    result = sr.upsample(img)
+    array = asarray(result)
     image = Image.fromarray(array, 'RGB')
     # When saving the file, we need to remove the original format with split() and replace it with png
     image.save(app.config['DOWNLOAD_FOLDER'] / f'{filename.split(".")[0]}.png')
@@ -89,6 +97,7 @@ def download_file(filename):
 @app.route('/download')
 def download():
     file = request.args.get('file', None)
+
     if "update more images" in request.form:
         # Clear current Flask session and redirects to home page.
         session.pop('UPLOAD_FOLDER', None)

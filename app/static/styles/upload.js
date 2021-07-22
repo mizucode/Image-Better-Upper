@@ -1,3 +1,4 @@
+
     const input = document.querySelector('input');
     const preview = document.querySelector('.preview');
 

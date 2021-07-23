@@ -77,36 +77,20 @@ def convert_image(path, filename):
     image.save(app.config['DOWNLOAD_FOLDER'] / f'{filename.split(".")[0]}.png')
 
 
-# converted images page, displays list of updated images, and button prompt to download them
-# @app.route('/updated', methods=['GET'])
-# def updated():
-# path = DOWNLOAD_FOLDER
-# dirs = os.listdir(path)
-# for filename in dirs:
-# filename = secure_filename(filename)
-# return redirect(url_for('download', filename=filename))
-# return render_template("updated.html")
-
-
-@app.route('/app/uploads/<filename>')
+@app.route('/download/<filename>')
 def download_file(filename):
-    return send_from_directory(app.config['DOWNLOAD_FOLDER'], f'{filename.split(".")[0]}.png', as_attachment=True)
+    if "update more images" in request.form:
+        session.pop('UPLOAD_FOLDER', None)
+        session.pop('DOWNLOAD_FOLDER', None)
+        return redirect(url_for('index'))
+    return render_template('download.html', value=filename)
 
 
 # final page displays goodbye message along with prompt to do more images, while files are downloading
-@app.route('/download')
-def download():
-    if "update more images" in request.form:
-        # Clear current Flask session and redirects to home page.
-        session.pop('UPLOAD_FOLDER', None)
-        session.pop('DOWNLOAD_FOLDER', None)
-        return redirect(url_for('/'))
-    return render_template("download.html")
+@app.route('/return-files/<filename>')
+def return_files(filename):
+    return send_from_directory(app.config['DOWNLOAD_FOLDER'], f'{filename.split(".")[0]}.png', as_attachment=True)
 
-
-# app.add_url_rule(
-# "/app/uploads/<filename>", endpoint="download_file", build_only=True
-# )
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

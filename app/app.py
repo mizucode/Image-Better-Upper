@@ -4,12 +4,10 @@ import imageio
 from numpy import asarray
 from PIL import Image
 import os
+import io
+from zipfile import ZipFile
 from pathlib import Path
-import asyncio
-import cv2
 from cv2 import dnn_superres
-import numpy
-
 
 # could be using static to declare/implement static folder path instead of app/uploads
 app = Flask(__name__, static_url_path="/static")
@@ -51,19 +49,20 @@ def index():
 @app.route('/upload', methods=['POST', 'GET'])
 def upload():
     if request.method == 'POST':
-        file = request.files['file']
-        filename = secure_filename(file.filename)
-        # session['file'] = str(app.config['UPLOAD_FOLDER'] / filename)
         if 'file' not in request.files:
             print('No file attached in request')
             return redirect(request.url)
-        if file.filename == '':
+        files = request.files.getlist('file')
+        if len(files) == 1 and files[0].filename == '':
             print('No file selected')
             return redirect(request.url)
-        if file and allowed_file(file.filename):
-            file.save(app.config['UPLOAD_FOLDER'] / filename)
-            convert_image(app.config['UPLOAD_FOLDER'], filename)
-            return redirect(url_for('download_file', filename=filename))
+        for file in files:
+            filename = secure_filename(file.filename)
+            if file and allowed_file(file.filename):
+                file.save(app.config['UPLOAD_FOLDER'] / filename)
+                convert_image(app.config['UPLOAD_FOLDER'], filename)
+        prepare_images(app.config['DOWNLOAD_FOLDER'], 'updated_images.zip')
+        return redirect(url_for('download_file', filename='updated_images.zip'))
     return render_template('upload.html')
 
 
@@ -82,23 +81,31 @@ def convert_image(path, filename):
     image.save(app.config['DOWNLOAD_FOLDER'] / f'{filename.split(".")[0]}.png')
 
 
+def prepare_images(path, filename):
+    with ZipFile(path / filename, 'w') as zeep:
+        for file in path.iterdir():
+            if file.suffix != '.png':
+                continue
+            zeep.write(file, file.name)
+
+
 @app.route('/download/<filename>')
 def download_file(filename):
-    # session.modified = True
     if "update more images" in request.form:
-        app.logger.warning('update more images is in da request form')
         return redirect(url_for('index'))
-    app.logger.warning('update more images was not in da request form')
     return render_template('download.html', value=filename)
 
 
 # final page displays goodbye message along with prompt to do more images, while files are downloading
 @app.route('/return-files/<filename>')
 def return_files(filename):
-    with open(app.config['DOWNLOAD_FOLDER'] / f'{filename.split(".")[0]}.png', 'rb') as imgdata:
-        img = imageio.imread(imgdata)
+    return_data = io.BytesIO()
+    with open((app.config['DOWNLOAD_FOLDER'] / 'updated_images.zip'), 'rb') as fo:
+        return_data.write(fo.read())
+        return_data.seek(0)
     clean_files()
-    return send_file(img, attachment_filename=f'{filename.split(".")[0]}.png', as_attachment=True)
+    return send_file(return_data, mimetype='application/zip',
+                     attachment_filename='updated_images.zip', as_attachment=True)
 
 
 def clean_files():
@@ -106,6 +113,7 @@ def clean_files():
         file.unlink()
     for file in app.config['UPLOAD_FOLDER'].iterdir():
         file.unlink()
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

@@ -15,8 +15,9 @@ button{
   border: none;
   width: 508px;
   height: 35px;
-    margin: -20px 0 0 -4px;
-    border-radius: 4px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 4px;
   border-bottom: 4px solid #117A60;
   transition: all .2s ease;
   outline: none;
@@ -63,14 +64,20 @@ form label, form button {
     border: 1px ridge black;
     font-size: 0.8rem;
     height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 form label:hover, form button:hover {
    background-color: #149174;
    color: #0C5645;
+   display: block;
+    margin: 0 auto;
 }
 
 form label:active, form button:active {
   background-color: #149174;
   color: #0C5645;
+  display: block;
+  margin: 0 auto;
 }

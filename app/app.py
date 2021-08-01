@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for, render_template, send_file
+from flask import Flask, request, redirect, url_for, render_template, send_file, Response
 from werkzeug.utils import secure_filename
 import imageio
 from numpy import asarray
@@ -8,7 +8,23 @@ import io
 from zipfile import ZipFile
 from pathlib import Path
 from cv2 import dnn_superres
+import random
+import threading
+import time
 
+class ExportingThread(threading.Thread):
+    def __init__(self):
+        self.progress = 0
+        super().__init__()
+
+    def run(self):
+        # Your exporting stuff goes here ...
+        for _ in range(10):
+            time.sleep(1)
+            self.progress += 10
+
+
+exporting_threads = {}
 # could be using static to declare/implement static folder path instead of app/uploads
 app = Flask(__name__, static_url_path="/static")
 # app.config["SESSION_PERMANENT"] = False
@@ -42,6 +58,7 @@ def allowed_file(filename):
 # |index page, starting point
 @app.route('/')
 def index():
+    clean_files()
     return render_template("index.html")
 
 

@@ -2,17 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Image better-upper</title>
+    <title>Image update</title>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/upload.js') }}">
 </head>
 <body>
-   <h1>Image better-upper</h1>
+   <h1>Image update</h1>
    <h3>Convert .jpg files to higher-resolution png</h3>
-       <form method=post enctype=multipart/form-data>
-           <input name="file" type=file id="file" onchange="list_files()"/>
-           <p id="upload_text">Drag your files here or click in this area.</p>
-           <button type="submit" value="Upload">Update</button>
-       </form>
+
+   <a href="upload"><button type="button">Start</button></a>
 </body>
 </html>

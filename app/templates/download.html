@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image update - Download</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+</head>
+<body>
+   <h1 align="center">Enjoy your images!</h1>
+   <a href="/return-files/{{value}}" target="blank"><button class='btn btn-default'>Download</button></a>
+   <a href="/"><button type="button" value="clear">Update more images</button></a>
+</body>
+</html>

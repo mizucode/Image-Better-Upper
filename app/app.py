@@ -1,62 +1,108 @@
-from flask import Flask, request, redirect, url_for, render_template, send_from_directory
+from flask import Flask, request, redirect, url_for, render_template, send_file, Response
 from werkzeug.utils import secure_filename
 import imageio
 from numpy import asarray
 from PIL import Image
 import os
+import io
+from zipfile import ZipFile
 from pathlib import Path
-
-UPLOAD_FOLDER = Path(__file__).resolve().parent / 'uploads'
-print(UPLOAD_FOLDER)
-DOWNLOAD_FOLDER = Path(__file__).resolve().parent / 'downloads'
-print(DOWNLOAD_FOLDER)
-ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+from cv2 import dnn_superres
 
 app = Flask(__name__, static_url_path="/static")
-# DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+
+UPLOAD_FOLDER = Path(__file__).resolve().parent / 'uploads'
+
+DOWNLOAD_FOLDER = Path(__file__).resolve().parent / 'downloads'
+
+# use these or upload.js?
+ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['DOWNLOAD_FOLDER'] = DOWNLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
 
 
+# global function?
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/', methods=['POST', 'GET'])
+# |index page, starting point
+@app.route('/')
 def index():
+    clean_files()
+    return render_template("index.html")
+
+
+# |upload page, initialize new session, upload button, upload function
+@app.route('/upload', methods=['POST', 'GET'])
+def upload():
     if request.method == 'POST':
         if 'file' not in request.files:
             print('No file attached in request')
             return redirect(request.url)
-        file = request.files['file']
-        if file.filename == '':
+        files = request.files.getlist('file')
+        if len(files) == 1 and files[0].filename == '':
             print('No file selected')
             return redirect(request.url)
-        if file and allowed_file(file.filename):
+        for file in files:
             filename = secure_filename(file.filename)
-            file.save(app.config['UPLOAD_FOLDER'] / filename)
-            process_file(app.config['UPLOAD_FOLDER'], filename)
-            return redirect(url_for('uploaded_file', filename=filename))
-    return render_template("index.html")
+            if file and allowed_file(file.filename):
+                file.save(app.config['UPLOAD_FOLDER'] / filename)
+                convert_image(app.config['UPLOAD_FOLDER'], filename)
+        prepare_images(app.config['DOWNLOAD_FOLDER'], 'updated_images.zip')
+        return redirect(url_for('download_file', filename='updated_images.zip'))
+    return render_template('upload.html')
 
 
-def process_file(path, filename):
-    convert_image(path, filename)
-
-
+# convert image function
 def convert_image(path, filename):
     print(path / filename)
-    im = imageio.imread(open(path / filename, 'rb'))
-    array = asarray(im)
+    img = imageio.imread(open(path / filename, 'rb'))
+    sr = dnn_superres.DnnSuperResImpl_create()
+    cv_path = str(Path(__file__).parent.parent / "ESPCN_x3.pb")
+    sr.readModel(cv_path)
+    sr.setModel("espcn", 3)
+    result = sr.upsample(img)
+    array = asarray(result)
     image = Image.fromarray(array, 'RGB')
     # When saving the file, we need to remove the original format with split() and replace it with png
     image.save(app.config['DOWNLOAD_FOLDER'] / f'{filename.split(".")[0]}.png')
 
 
-@app.route('/app/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['DOWNLOAD_FOLDER'], f'{filename.split(".")[0]}.png', as_attachment=True)
+def prepare_images(path, filename):
+    with ZipFile(path / filename, 'w') as zeep:
+        for file in path.iterdir():
+            if file.suffix != '.png':
+                continue
+            zeep.write(file, file.name)
+
+
+@app.route('/download/<filename>')
+def download_file(filename):
+    if "update more images" in request.form:
+        return redirect(url_for('index'))
+    return render_template('download.html', value=filename)
+
+
+# final page displays goodbye message along with prompt to do more images, while files are downloading
+@app.route('/return-files/<filename>')
+def return_files(filename):
+    return_data = io.BytesIO()
+    with open((app.config['DOWNLOAD_FOLDER'] / 'updated_images.zip'), 'rb') as fo:
+        return_data.write(fo.read())
+        return_data.seek(0)
+    clean_files()
+    return send_file(return_data, mimetype='application/zip',
+                     attachment_filename='updated_images.zip', as_attachment=True)
+
+
+def clean_files():
+    for file in app.config['DOWNLOAD_FOLDER'].iterdir():
+        file.unlink()
+    for file in app.config['UPLOAD_FOLDER'].iterdir():
+        file.unlink()
 
 
 if __name__ == '__main__':

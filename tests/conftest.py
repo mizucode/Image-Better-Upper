@@ -1,5 +1,6 @@
 import pytest
 
+from app import app
 
 def sisi():
     return "cute"

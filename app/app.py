@@ -8,39 +8,12 @@ import io
 from zipfile import ZipFile
 from pathlib import Path
 from cv2 import dnn_superres
-import random
-import threading
-import time
 
-class ExportingThread(threading.Thread):
-    def __init__(self):
-        self.progress = 0
-        super().__init__()
-
-    def run(self):
-        # Your exporting stuff goes here ...
-        for _ in range(10):
-            time.sleep(1)
-            self.progress += 10
-
-
-exporting_threads = {}
-# could be using static to declare/implement static folder path instead of app/uploads
 app = Flask(__name__, static_url_path="/static")
-# app.config["SESSION_PERMANENT"] = False
-# app.config["SESSION_TYPE"] = "filesystem"
-
-# replace with actual secret key?
-app.secret_key = '34745h3u7657hdfjhfddfy'
-
 
 UPLOAD_FOLDER = Path(__file__).resolve().parent / 'uploads'
 
-# why print(x2)?
-print(UPLOAD_FOLDER)
-
 DOWNLOAD_FOLDER = Path(__file__).resolve().parent / 'downloads'
-print(DOWNLOAD_FOLDER)
 
 # use these or upload.js?
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
@@ -88,7 +61,7 @@ def convert_image(path, filename):
     print(path / filename)
     img = imageio.imread(open(path / filename, 'rb'))
     sr = dnn_superres.DnnSuperResImpl_create()
-    cv_path = "ESPCN_x3.pb"
+    cv_path = str(Path(__file__).parent.parent / "ESPCN_x3.pb")
     sr.readModel(cv_path)
     sr.setModel("espcn", 3)
     result = sr.upsample(img)

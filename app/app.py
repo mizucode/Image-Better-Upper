@@ -98,14 +98,16 @@ def return_files(filename):
         return_data.seek(0)
     clean_files()
     return send_file(return_data, mimetype='application/zip',
-                     attachment_filename='updated_images.zip', as_attachment=True)
+                     download_name='updated_images.zip', as_attachment=True)
 
 
 def clean_files():
     for file in app.config['DOWNLOAD_FOLDER'].iterdir():
-        file.unlink()
+        if file.suffix != '.keep':
+            file.unlink()
     for file in app.config['UPLOAD_FOLDER'].iterdir():
-        file.unlink()
+        if file.suffix != '.keep':
+            file.unlink()
 
 
 if __name__ == '__main__':

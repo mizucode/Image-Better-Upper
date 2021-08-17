@@ -9,11 +9,14 @@ from zipfile import ZipFile
 from pathlib import Path
 from cv2 import dnn_superres
 
+
 app = Flask(__name__, static_url_path="/static")
 
 UPLOAD_FOLDER = Path(__file__).resolve().parent / 'uploads'
 
 DOWNLOAD_FOLDER = Path(__file__).resolve().parent / 'downloads'
+
+model = Path(__file__).resolve().parent / 'ESPCN_x3.pb'
 
 # use these or upload.js?
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
@@ -61,7 +64,7 @@ def convert_image(path, filename):
     print(path / filename)
     img = imageio.imread(open(path / filename, 'rb'))
     sr = dnn_superres.DnnSuperResImpl_create()
-    cv_path = str(Path(__file__).parent.parent / "ESPCN_x3.pb")
+    cv_path = str(model)
     sr.readModel(cv_path)
     sr.setModel("espcn", 3)
     result = sr.upsample(img)

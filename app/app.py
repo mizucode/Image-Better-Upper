@@ -1,3 +1,4 @@
+import cv2
 from flask import Flask, request, redirect, url_for, render_template, send_file, Response
 from werkzeug.utils import secure_filename
 import imageio
@@ -67,6 +68,7 @@ def convert_image(path, filename):
     cv_path = str(model)
     sr.readModel(cv_path)
     sr.setModel("espcn", 3)
+    img = cv2.cvtColor(img, cv2.COLOR_RGBA2RGB)
     result = sr.upsample(img)
     array = asarray(result)
     image = Image.fromarray(array, 'RGB')

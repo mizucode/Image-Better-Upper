@@ -5,16 +5,77 @@
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 </head>
 <body>
-  <form method=post enctype=multipart/form-data>
-    <div>
-      <label for="file">Choose images to upload (PNG, JPG)</label>
+  <form method=post enctype=multipart/form-data style="border: none;">
+    <div style="padding-block: 10%">
+        <span class="button content">
+          <label for="file" style="
+                                border-bottom: none; cursor: pointer;
+                                font-size: 25px;
+                                font-height: 27px;
+                                font-weight: 400;
+                                letter-spacing: 0.1em;
+                                min-width: 5em;
+                                border-radius: 2em;
+                                transition: all 0.15s ease;
+                                font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+                                padding: 1em 2em;
+                                border-radius: 2em;
+                                display: inline-block;
+                                color: #006e6a;
+                                background-color: #fff;
+                                transition: all 0.15s ease;
+                                box-sizing: border-box;
+                                border: 1px solid #006e6a;
+                                ">
+  <?xml version="1.0" encoding="UTF-8" standalone="no"?> <!-- Created with Vectornator for iOS (http://vectornator.io/) --><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="20px" width="29px" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"  xmlns:vectornator="http://vectornator.io" version="1.1" viewBox="4 0 25 25">
+<metadata>
+<vectornator:setting key="DimensionsVisible" value="1"/>
+<vectornator:setting key="PencilOnly" value="0"/>
+<vectornator:setting key="SnapToPoints" value="0"/>
+<vectornator:setting key="OutlineMode" value="0"/>
+<vectornator:setting key="CMYKEnabledKey" value="0"/>
+<vectornator:setting key="RulersVisible" value="1"/>
+<vectornator:setting key="SnapToEdges" value="0"/>
+<vectornator:setting key="GuidesVisible" value="1"/>
+<vectornator:setting key="DisplayWhiteBackground" value="0"/>
+<vectornator:setting key="doHistoryDisabled" value="0"/>
+<vectornator:setting key="SnapToGuides" value="1"/>
+<vectornator:setting key="TimeLapseWatermarkDisabled" value="0"/>
+<vectornator:setting key="Units" value="Pixels"/>
+<vectornator:setting key="DynamicGuides" value="0"/>
+<vectornator:setting key="IsolateActiveLayer" value="0"/>
+<vectornator:setting key="SnapToGrid" value="0"/>
+</metadata>
+<defs/>
+<g id="Layer 1" vectornator:layerName="Layer 1">
+<g opacity="1">
+<path d="M2.62773+14.2225L22.7527+14.2225C23.0809+14.2225+23.3657+14.104+23.6072+13.867C23.8488+13.63+23.9695+13.3429+23.9695+13.0057C23.9695+12.6685+23.8488+12.3791+23.6072+12.1375C23.3657+11.896+23.0809+11.7752+22.7527+11.7752L2.62773+11.7752C2.2996+11.7752+2.01477+11.896+1.77324+12.1375C1.5317+12.3791+1.41093+12.6685+1.41093+13.0057C1.41093+13.3429+1.5317+13.63+1.77324+13.867C2.01477+14.104+2.2996+14.2225+2.62773+14.2225ZM12.6902+24.285C13.0275+24.285+13.3169+24.1642+13.5584+23.9227C13.7999+23.6812+13.9207+23.3963+13.9207+23.0682L13.9207+2.9432C13.9207+2.61507+13.7999+2.33024+13.5584+2.08871C13.3169+1.84717+13.0275+1.7264+12.6902+1.7264C12.353+1.7264+12.0659+1.84717+11.8289+2.08871C11.5919+2.33024+11.4734+2.61507+11.4734+2.9432L11.4734+23.0682C11.4734+23.3963+11.5919+23.6812+11.8289+23.9227C12.0659+24.1642+12.353+24.285+12.6902+24.285Z" opacity="1" fill="#006e6a"/>
+</g>
+</g>
+</svg>
+    UPLOAD</label></span>
       <input type="file" id="file" name="file" onchange="showButton()" accept=".jpg, .jpeg, .png" multiple>
-    </div>
-    <div class="preview">
-      <p>No files currently selected for upload</p>
-    </div>
-    <div>
-      <button type="submit" value="download" id ="button2" style="visibility:hidden">Update and download</button>
+      <div class="preview">
+        <p style="color: #6b6b6b;">No files currently selected for upload</p>
+      </div>
+      <div>
+        <button type="submit" value="download" id ="button2" style="visibility:hidden; background: #006e6a;
+                            border-bottom: none; cursor: pointer;
+                            font-size: 25px;
+                            font-weight: 300;
+                            letter-spacing: 0.1em;
+                            min-width: 5em;
+                            text-align: center;
+                            padding: 1em 2em;
+                            border-radius: 2em;
+                            transition: all 0.15s ease;
+                            box-sizing: border-box;
+                            border: .5px solid #007e7a;
+                            font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+                            height: 3em;
+                            color: white;">UPDATE</button>
+      </div>
     </div>
   </form>
   <script type=text/javascript src="{{ url_for('static', filename='styles/upload.js') }}">

@@ -2,12 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Image update - Download</title>
+    <title>Image better upper - Download</title>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 </head>
 <body>
-   <h1 align="center">Enjoy your images!</h1>
-   <a href="/return-files/{{value}}" target="blank"><button class='btn btn-default'>Download</button></a>
-   <a href="/"><button type="button" value="clear">Update more images</button></a>
+<div style="padding-block: 5%">
+    <div style="padding-block: 10%">
+   <h1 align="center" style="font-weight: 300;
+margin: 0;
+font-size: 3.2em; color: #273849; font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif; -moz-osx-font-smoothing: grayscale;">Enjoy your images!</h1>
+    </div>
+    <div style="text-align: center;">
+   <a href="/" style="padding-right: 10px; padding-bottom: 10px;"><button type="button" value="clear" style="
+                                border-bottom: none; cursor: pointer;
+                                font-size: 25px;
+                                font-weight: 300;
+                                letter-spacing: 0.1em;
+                                width: auto;
+                                border-radius: 2em;
+                                transition: all 0.15s ease;
+                                font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+                                padding: 1em 2em;
+                                text-align: center;
+                                background-color: #fff;
+                                transition: all 0.15s ease;
+                                box-sizing: border-box;
+                                border: .5px solid #006e6a;
+                                height: 3em;
+                                color: #006e6a;
+                                display: inline-block;
+                                ">UPDATE MORE IMAGES</button></a>
+   <a href="/return-files/{{value}}" target="blank"><button class='btn btn-default' style=" background: #006e6a;
+                            border-bottom: none; cursor: pointer;
+                            font-size: 25px;
+                            font-weight: 300;
+                            letter-spacing: 0.1em;
+                            width: auto;
+                            text-align: center;
+                            padding: 1em 2em;
+                            border-radius: 2em;
+                            transition: all 0.15s ease;
+                            box-sizing: border-box;
+                            border: .5px solid #007e7a;
+                            font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+                            height: 3em;
+                            color: white;
+                            display: inline-block;
+">DOWNLOAD</button></a>
+</div>
+</div>
 </body>
 </html>

@@ -100,7 +100,7 @@ def return_files(filename):
         return_data.seek(0)
     clean_files()
     return send_file(return_data, mimetype='application/zip',
-                     download_name='updated_images.zip', as_attachment=True)
+                     attachment_filename='updated_images.zip', as_attachment=True)
 
 
 def clean_files():

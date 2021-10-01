@@ -1,5 +1,6 @@
 import cv2
 from flask import Flask, request, redirect, url_for, render_template, send_file, Response
+from waitress import serve
 from werkzeug.utils import secure_filename
 import imageio
 from numpy import asarray
@@ -113,5 +114,4 @@ def clean_files():
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    serve(app, host='0.0.0.0', port=5000, url_scheme='https')

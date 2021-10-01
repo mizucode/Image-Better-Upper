@@ -2,31 +2,13 @@
 <html>
 <head>
   <title>Image Better Upper</title>
-  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
 </head>
 <body>
   <form method=post enctype=multipart/form-data style="border: none;">
     <div style="padding-inline: 100px;">
         <span class="button content">
-          <label for="file" style="
-                                border-bottom: none; cursor: pointer;
-                                font-size: 25px;
-                                font-height: 27px;
-                                font-weight: 400;
-                                letter-spacing: 0.1em;
-                                min-width: 5em;
-                                border-radius: 2em;
-                                transition: all 0.15s ease;
-                                font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
-                                padding: 1em 2em;
-                                border-radius: 2em;
-                                display: inline-block;
-                                color: #006e6a;
-                                background-color: #fff;
-                                transition: all 0.15s ease;
-                                box-sizing: border-box;
-                                border: 1px solid #006e6a;
-                                ">
+          <label for="file" id="upload">
   <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg height="20px" width="29px" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"  version="1.1" viewBox="4 0 25 25">
 
@@ -43,21 +25,7 @@
         <p style="color: #6b6b6b;">No files currently selected for upload</p>
       </div>
       <div>
-        <button type="submit" value="download" id ="button2" style="visibility:hidden; background: #006e6a;
-                            border-bottom: none; cursor: pointer;
-                            font-size: 25px;
-                            font-weight: 300;
-                            letter-spacing: 0.1em;
-                            min-width: 5em;
-                            text-align: center;
-                            padding: 1em 2em;
-                            border-radius: 2em;
-                            transition: all 0.15s ease;
-                            box-sizing: border-box;
-                            border: .5px solid #007e7a;
-                            font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
-                            height: 3em;
-                            color: white;">UPDATE</button>
+        <button type="submit" value="download" id ="primary" style="visibility:hidden;">UPDATE</button>
       </div>
     </div>
   </form>
@@ -66,7 +34,7 @@
   <script type ="text/javascript" >
     function showButton()
     {
-    document.getElementById ("button2").style .visibility ="visible";
+    document.getElementById ("primary").style .visibility ="visible";
     }
   </script>
 </body>

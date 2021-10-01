@@ -26,7 +26,7 @@
          const para = document.createElement('p');
 
       if(file) {
-         para.textContent = `File name ${file.name}, file size ${returnFileSize(file.size)}.`;
+         para.textContent = `${file.name}, file size ${returnFileSize(file.size)}.`;
          const image = document.createElement('img');
          image.src = URL.createObjectURL(file);
 

@@ -15,7 +15,7 @@
 
       if(curFiles.length === 0) {
         const para = document.createElement('p');
-        para.textContent = 'No files currently selected for upload';
+        para.textContent = 'No files currently selected for upload. Please make sure the file size total is under 2MB.';
         preview.appendChild(para);
       } else {
         const list = document.createElement('ol');
@@ -44,7 +44,9 @@
         return number + 'bytes';
       } else if(number > 1024 && number < 1048576) {
         return (number/1024).toFixed(1) + 'KB';
-      } else if(number > 1048576) {
+      } else if(number > 1048576 && number < 2097151) {
         return (number/1048576).toFixed(1) + 'MB';
+      } else if(number > 2097151) {
+        return 'is too large. Please select the Upload button to add a new file';
       }
     }

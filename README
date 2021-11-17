@@ -9,14 +9,14 @@ Since this is intended for upgrading lower-resolution images, the max total file
 
 Here is an example of the difference in resolution:
 
-![](readme_photos/res_test_1A)
+![](readme_photos/res_test_1A.png)
 
 Something to note is the image we are starting with, although small, is still sharp and detailed. This produces an ideal end result.
 
-![](readme_photos/res_test_1B)
+![](readme_photos/res_test_1B.png)
 
 Here's an example of how lower-quality image fares:
 
-![](readme_photos/res_test_2A)
+![](readme_photos/res_test_2A.png)
 
-![](readme_photos/res_test_2B)
+![](readme_photos/res_test_2B.png)

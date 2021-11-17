@@ -8,3 +8,15 @@ Demo at https://image-better-upper.mizucode.com/
 Since this is intended for upgrading lower-resolution images, the max total file size is 2MB.
 
 Here is an example of the difference in resolution:
+
+![](readme_photos/res_test_1A)
+
+Something to note is the image we are starting with, although small, is still sharp and detailed. This produces an ideal end result.
+
+![](readme_photos/res_test_1B)
+
+Here's an example of how lower-quality image fares:
+
+![](readme_photos/res_test_2A)
+
+![](readme_photos/res_test_2B)

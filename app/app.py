@@ -20,7 +20,6 @@ DOWNLOAD_FOLDER = Path(__file__).resolve().parent / 'downloads'
 
 model = Path(__file__).resolve().parent / 'ESPCN_x3.pb'
 
-# use these or upload.js?
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -28,7 +27,6 @@ app.config['DOWNLOAD_FOLDER'] = DOWNLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 2048
 
 
-# global function?
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -61,7 +59,6 @@ def upload():
     return render_template('upload.html')
 
 
-# convert image function
 def convert_image(path, filename):
     print(path / filename)
     img = imageio.imread(open(path / filename, 'rb'))
